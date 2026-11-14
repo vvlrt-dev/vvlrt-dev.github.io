@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jahondor O. — Web Portfolio</title>
+<meta name="description" content="Front-end and Roblox developer based in Tashkent. Concept projects: e-commerce landing page, restaurant website, SaaS landing page.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@600;800&family=Public+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: name + one-line offer, then a stacked list of projects, each a screenshot beside its brief */
+:root {
+  --bg: #f4f5f1; --surface: #ffffff; --ink: #161c19; --muted: #59645e; --line: #dbe0d8; --accent: #2b6f8c;
+  --display: "Schibsted Grotesk", Arial, system-ui, sans-serif;
+  --body: "Public Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --mono: "DM Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0f1412; --surface: #161d1a; --ink: #e7eeea; --muted: #9eaea6; --line: #26322d; --accent: #6bb8d8; color-scheme: dark; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--body); }
+.wrap { max-width: 1040px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header { padding-block: 64px 40px; display: grid; gap: 16px; }
+.eyebrow { font: 500 0.78rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin: 0; }
+h1 { font: 800 clamp(2.2rem, 5vw, 3.6rem)/1.05 var(--display); letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
+.lede { font-size: 1.12rem; color: var(--muted); max-width: 60ch; margin: 0; }
+.links { display: flex; flex-wrap: wrap; gap: 10px; }
+.links a { font-weight: 600; color: var(--ink); text-decoration: none; border: 1px solid var(--line); background: var(--surface); padding: 9px 16px; border-radius: 10px; }
+.links a:hover { border-color: var(--accent); }
+main { display: grid; gap: 28px; padding-bottom: 64px; }
+.project { display: grid; grid-template-columns: 1.25fr 1fr; gap: 28px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
+.project > * { min-width: 0; }
+.project img { width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line); display: block; }
+.project h2 { font: 800 1.6rem/1.15 var(--display); margin: 0 0 6px; letter-spacing: -0.01em; }
+.project .type { font: 500 0.78rem var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 12px; }
+.project p { margin: 0 0 12px; color: var(--muted); }
+.project ul { margin: 0 0 16px; padding-left: 18px; }
+.project li { margin-bottom: 4px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.tags span { font: 500 0.74rem var(--mono); border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; color: var(--muted); }
+.open { display: inline-block; font-weight: 600; color: #fff; background: var(--accent); text-decoration: none; padding: 11px 18px; border-radius: 10px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+@media (max-width: 820px) { .project { grid-template-columns: 1fr; } }
+footer { border-top: 1px solid var(--line); padding-block: 28px; color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Web &amp; Roblox developer · Tashkent, UTC+5</p>
+    <h1>Jahondor O.</h1>
+    <p class="lede">I build responsive landing pages and small websites with working interactive features: product configurators, menus, booking forms and pricing calculators. I also script Roblox game systems in Luau. The projects below are concept builds for fictional brands.</p>
+    <div class="links">
+      <a href="https://www.upwork.com/freelancers/~014778da2f1f4e481a">Hire me on Upwork</a>
+    </div>
+  </header>
+
+  <main>
+    <article class="project">
+      <a href="tidewell.html"><img src="tidewell.png" alt="Tidewell landing page: headline, product facts label and call-to-action buttons" width="1440" height="900" loading="lazy"></a>
+      <div>
+        <p class="type">E-commerce landing page · concept</p>
+        <h2>Tidewell</h2>
+        <p>Conversion-focused page for a fictional electrolyte drink brand.</p>
+        <ul>
+          <li>Pack configurator with live price, subscription discount and free-shipping threshold</li>
+          <li>Interactive sweat-rate calculator with input validation</li>
+          <li>Cart counter, FAQ, light and dark themes</li>
+        </ul>
+        <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Responsive</span></div>
+        <a class="open" href="tidewell.html">Open live demo</a>
+      </div>
+    </article>
+
+    <article class="project">
+      <a href="kazan.html"><img src="kazan.png" alt="Kazan &amp; Tandoor restaurant website: dark hero with today's kazan portion meter" width="1440" height="900" loading="lazy"></a>
+      <div>
+        <p class="type">Restaurant website · concept</p>
+        <h2>Kazan &amp; Tandoor</h2>
+        <p>Site for a fictional Uzbek restaurant built around its daily plov.</p>
+        <ul>
+          <li>Tabbed menu with vegetarian and spicy filters</li>
+          <li>Live "open now" status calculated from opening hours</li>
+          <li>Table-booking form with validation and confirmation screen</li>
+        </ul>
+        <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Forms</span></div>
+        <a class="open" href="kazan.html">Open live demo</a>
+      </div>
+    </article>
+
+    <article class="project">
+      <a href="shiftbook.html"><img src="shiftbook.png" alt="Shiftbook SaaS landing page: headline above an interactive weekly staff rota" width="1440" height="900" loading="lazy"></a>
+      <div>
+        <p class="type">SaaS landing page · concept</p>
+        <h2>Shiftbook</h2>
+        <p>Landing page for a fictional staff-scheduling app for cafés.</p>
+        <ul>
+          <li>Interactive weekly rota that flags and auto-fills unfilled shifts</li>
+          <li>Live staff-hours and labor-cost summary</li>
+          <li>Per-seat pricing slider with monthly/yearly toggle</li>
+        </ul>
+        <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>UI</span></div>
+        <a class="open" href="shiftbook.html">Open live demo</a>
+      </div>
+    </article>
+  </main>
+
+  <footer>All brands on this page are fictional and were created as portfolio demos.</footer>
+</div>
+</body>
+</html>

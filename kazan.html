@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Kazan & Tandoor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: dark indigo "evening" hero with an ikat band, then light paper sections; menu as tabbed price list, booking as a single-column form beside hours */
+:root {
+  --indigo: #1d1f4f;
+  --indigo-2: #2a2d6b;
+  --saffron: #f0a92a;
+  --pomegranate: #c2364a;
+  --teal: #1f8a8a;
+  --bg: #f7f5fb;
+  --surface: #ffffff;
+  --ink: #1a1b33;
+  --muted: #5b5d7a;
+  --line: #dddbea;
+  --on-dark: #f3f1ff;
+  --display: "Unbounded", "Arial Black", system-ui, sans-serif;
+  --body: "Manrope", "Segoe UI", Arial, system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #12132e; --surface: #1a1c40; --ink: #ecebff; --muted: #a9a8cc; --line: #2f3163; --indigo: #0d0e26; --indigo-2: #1a1c45; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #12132e; --surface: #1a1c40; --ink: #ecebff; --muted: #a9a8cc; --line: #2f3163; --indigo: #0d0e26; --indigo-2: #1a1c45; color-scheme: dark; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.6; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--indigo); }
+.wrap { max-width: 1100px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.08; text-wrap: balance; }
+h1 { font-size: clamp(2.2rem, 5.4vw, 4rem); font-weight: 800; letter-spacing: -0.02em; }
+h2 { font-size: clamp(1.6rem, 3.2vw, 2.4rem); font-weight: 700; letter-spacing: -0.01em; }
+h3 { font-size: 1rem; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--pomegranate); }
+:focus-visible { outline: 3px solid var(--saffron); outline-offset: 3px; border-radius: 6px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; font: 700 1rem var(--body); padding: 14px 24px; border-radius: 10px; border: 2px solid var(--saffron); background: var(--saffron); color: #1a1b33; cursor: pointer; text-decoration: none; transition: transform .15s; }
+.btn:hover { transform: translateY(-1px); }
+.btn.line { background: transparent; color: var(--on-dark); border-color: color-mix(in srgb, var(--on-dark) 40%, transparent); }
+
+/* top + hero */
+.top { background: var(--indigo); color: var(--on-dark); }
+header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--indigo); border-bottom: 1px solid color-mix(in srgb, var(--on-dark) 12%, transparent); }
+.nav { display: flex; align-items: center; gap: 24px; padding-block: 14px; }
+.logo { font: 800 1.05rem var(--display); color: var(--on-dark); text-decoration: none; letter-spacing: 0.02em; }
+.logo span { color: var(--saffron); }
+.nav-links { display: flex; gap: 22px; margin-left: auto; }
+.nav-links a { color: color-mix(in srgb, var(--on-dark) 75%, transparent); text-decoration: none; font-weight: 600; }
+.nav-links a:hover { color: var(--on-dark); }
+.status { display: inline-flex; align-items: center; gap: 8px; font: 600 0.8rem var(--mono); padding: 6px 12px; border-radius: 999px; background: color-mix(in srgb, var(--on-dark) 10%, transparent); }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+.status.open .dot { background: #4cd38a; box-shadow: 0 0 0 4px color-mix(in srgb, #4cd38a 25%, transparent); }
+@media (max-width: 760px) { .nav-links { display: none; } .status { margin-left: auto; } }
+.hero { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 48px; align-items: end; padding-block: 64px 56px; }
+.hero > * { min-width: 0; }
+.hero-copy { display: grid; gap: 22px; }
+.hero-copy .eyebrow { color: var(--saffron); }
+.hero-copy p.lede { font-size: 1.12rem; color: color-mix(in srgb, var(--on-dark) 80%, transparent); max-width: 44ch; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.kazan-card { border: 1px solid color-mix(in srgb, var(--on-dark) 18%, transparent); border-radius: 16px; padding: 22px; display: grid; gap: 16px; background: var(--indigo-2); }
+.kazan-card .label { font: 600 0.72rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: color-mix(in srgb, var(--on-dark) 65%, transparent); }
+.meter { height: 12px; border-radius: 999px; background: color-mix(in srgb, var(--on-dark) 14%, transparent); overflow: hidden; }
+.meter i { display: block; height: 100%; width: 62%; background: linear-gradient(90deg, var(--saffron), var(--pomegranate)); border-radius: inherit; }
+.kazan-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; font-variant-numeric: tabular-nums; }
+.kazan-stats strong { display: block; font: 700 1.5rem var(--display); }
+.kazan-stats span { font-size: 0.8rem; color: color-mix(in srgb, var(--on-dark) 65%, transparent); }
+.kazan-card small { color: color-mix(in srgb, var(--on-dark) 60%, transparent); font-size: 0.8rem; }
+@media (max-width: 860px) { .hero { grid-template-columns: 1fr; padding-block: 40px; } }
+.ikat { height: 34px; background:
+  radial-gradient(ellipse 18px 15px at 25% 50%, var(--saffron) 60%, transparent 63%),
+  radial-gradient(ellipse 18px 15px at 75% 50%, var(--pomegranate) 60%, transparent 63%),
+  linear-gradient(90deg, var(--indigo) 0 100%);
+  background-size: 72px 34px; position: relative; }
+.ikat::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 34px, color-mix(in srgb, var(--teal) 70%, transparent) 34px 38px); opacity: .55; }
+
+/* sections */
+section { padding-block: 72px; }
+.head { display: grid; gap: 10px; margin-bottom: 32px; max-width: 620px; }
+.head p { color: var(--muted); }
+
+/* about */
+.about { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+.about > * { min-width: 0; }
+@media (max-width: 860px) { .about { grid-template-columns: 1fr; } }
+.timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-left: 2px solid var(--line); }
+.timeline li { padding: 0 0 22px 22px; position: relative; }
+.timeline li::before { content: ""; position: absolute; left: -7px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--saffron); border: 2px solid var(--bg); }
+.timeline time { font: 600 0.85rem var(--mono); color: var(--pomegranate); }
+.timeline p { color: var(--muted); }
+
+/* menu */
+.tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 24px; scrollbar-width: thin; }
+.tab { flex: 0 0 auto; font: 600 0.95rem var(--body); padding: 10px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.tab[aria-selected="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.filters { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 20px; font-size: 0.92rem; color: var(--muted); }
+.filters label { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.filters input { width: 18px; height: 18px; accent-color: var(--pomegranate); }
+.menu { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; align-items: start; }
+@media (max-width: 760px) { .menu { grid-template-columns: 1fr; } }
+.item { display: grid; align-content: start; grid-template-columns: 1fr auto; gap: 4px 16px; padding-block: 16px; border-bottom: 1px dashed var(--line); min-width: 0; }
+.item h3 { font-family: var(--body); font-size: 1.05rem; font-weight: 700; }
+.item .price { font: 600 1rem var(--mono); font-variant-numeric: tabular-nums; }
+.item p { grid-column: 1 / -1; color: var(--muted); font-size: 0.93rem; }
+.tags { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px; }
+.tags span { font: 600 0.7rem var(--mono); text-transform: uppercase; letter-spacing: .06em; padding: 2px 8px; border-radius: 6px; border: 1px solid var(--line); color: var(--muted); }
+.tags .veg { color: var(--teal); border-color: color-mix(in srgb, var(--teal) 45%, transparent); }
+.tags .hot { color: var(--pomegranate); border-color: color-mix(in srgb, var(--pomegranate) 45%, transparent); }
+.empty { color: var(--muted); padding-block: 16px; }
+
+/* booking */
+.book { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 32px; align-items: start; }
+.book > * { min-width: 0; }
+@media (max-width: 860px) { .book { grid-template-columns: 1fr; } }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 26px; }
+form.booking { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 520px) { form.booking { grid-template-columns: 1fr; } }
+.field { display: grid; gap: 6px; align-content: start; }
+.field.full { grid-column: 1 / -1; }
+.field label { font-weight: 700; font-size: 0.9rem; }
+.field input, .field select, .field textarea { font: 500 1rem var(--body); padding: 12px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); width: 100%; }
+.field textarea { resize: vertical; min-height: 84px; }
+.field .hint { font-size: 0.8rem; color: var(--muted); }
+.field.bad input, .field.bad select { border-color: var(--pomegranate); }
+.field .msg { font-size: 0.82rem; color: var(--pomegranate); }
+.confirm { display: grid; gap: 12px; }
+.confirm h3 { font-size: 1.3rem; }
+.confirm dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; margin: 0; }
+.confirm dt { color: var(--muted); }
+.confirm dd { margin: 0; font-weight: 700; }
+.hours { display: grid; gap: 18px; }
+.hours table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.hours td { padding: 9px 0; border-bottom: 1px solid var(--line); }
+.hours td:last-child { text-align: right; font-family: var(--mono); font-size: 0.92rem; }
+.hours tr.today td { font-weight: 700; color: var(--pomegranate); }
+.addr { font-size: 0.95rem; color: var(--muted); }
+.addr strong { color: var(--ink); display: block; }
+
+footer { background: var(--indigo); color: color-mix(in srgb, var(--on-dark) 75%, transparent); padding-block: 32px; font-size: 0.9rem; }
+.foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px; }
+.concept { font-family: var(--mono); font-size: 0.78rem; }
+</style>
+</head>
+<body>
+
+
+<div class="top">
+  <header>
+    <div class="wrap nav">
+      <a class="logo" href="#top">KAZAN <span>&amp;</span> TANDOOR</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="#story">Our kazan</a>
+        <a href="#menu">Menu</a>
+        <a href="#book">Book a table</a>
+      </nav>
+      <span class="status" id="status"><span class="dot"></span><span id="statusText">Checking hours</span></span>
+    </div>
+  </header>
+  <div class="wrap hero" id="top">
+    <div class="hero-copy">
+      <p class="eyebrow">Uzbek kitchen · Harbour Lane</p>
+      <h1>Plov from a 60-litre kazan, served at noon until it's gone.</h1>
+      <p class="lede">Rice, carrots, lamb and cumin cooked over an open flame the way it's done at a Tashkent osh centre. Samsa and bread come straight from our clay tandoor.</p>
+      <div class="actions">
+        <a class="btn" href="#book">Book a table</a>
+        <a class="btn line" href="#menu">See the menu</a>
+      </div>
+    </div>
+    <div class="kazan-card" aria-label="Today's kazan">
+      <p class="label">Today's kazan</p>
+      <div class="meter" role="meter" aria-valuemin="0" aria-valuemax="140" aria-valuenow="87" aria-label="Portions left"><i></i></div>
+      <div class="kazan-stats">
+        <div><strong>87</strong><span>portions left</span></div>
+        <div><strong>140</strong><span>cooked today</span></div>
+        <div><strong>12:00</strong><span>first serving</span></div>
+      </div>
+      <small>Sample figures. A live kitchen would update this from the till.</small>
+    </div>
+  </div>
+  <div class="ikat" aria-hidden="true"></div>
+</div>
+
+<main>
+  <section id="story">
+    <div class="wrap about">
+      <div class="head">
+        <p class="eyebrow">Our kazan</p>
+        <h2>One pot sets the rhythm of the day.</h2>
+        <p>Plov takes about four hours from cold kazan to first plate. We start before sunrise so the rice is ready for the lunch crowd, and we cook one batch a day. When the kazan is empty, plov is off the menu until tomorrow.</p>
+      </div>
+      <ol class="timeline" aria-label="A day in the kitchen">
+        <li><time>07:30</time><h3>Fire and oil</h3><p>Cotton-seed oil heats in the kazan until it smokes. Onions and lamb go in first.</p></li>
+        <li><time>08:45</time><h3>Zirvak</h3><p>Hand-cut yellow carrots, cumin and chickpeas simmer into the base.</p></li>
+        <li><time>10:15</time><h3>Rice and steam</h3><p>Soaked devzira rice is layered on top, then the kazan is covered to steam.</p></li>
+        <li><time>12:00</time><h3>First plate</h3><p>Served with quail egg, kazy and a fresh achichuk salad.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="menu" style="background: var(--surface);">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Menu</p>
+        <h2>Order like you're in Tashkent.</h2>
+        <p>Plates are built for sharing. Prices include tax.</p>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Menu sections" id="tabs"></div>
+      <div class="filters">
+        <label for="vegOnly"><input type="checkbox" id="vegOnly"> Vegetarian only</label>
+        <label for="hideHot"><input type="checkbox" id="hideHot"> Hide spicy dishes</label>
+      </div>
+      <div class="menu" id="menuList" role="tabpanel" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section id="book">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Book a table</p>
+        <h2>Reserve before 12:00 to be sure of plov.</h2>
+        <p>Tables for up to 10. For bigger groups we cook a separate kazan with 48 hours' notice.</p>
+      </div>
+      <div class="book">
+        <div class="card" id="bookCard">
+          <form class="booking" id="bookingForm" novalidate>
+            <div class="field"><label for="b-name">Name</label><input id="b-name" autocomplete="name" value="Amir Karimov"><span class="msg" hidden></span></div>
+            <div class="field"><label for="b-phone">Phone</label><input id="b-phone" type="tel" autocomplete="tel" value="+1 416 555 0182"><span class="msg" hidden></span></div>
+            <div class="field"><label for="b-date">Date</label><input id="b-date" type="date"><span class="msg" hidden></span></div>
+            <div class="field"><label for="b-time">Time</label><select id="b-time"></select><span class="msg" hidden></span></div>
+            <div class="field"><label for="b-size">Guests</label><select id="b-size"></select><span class="hint">Over 10? Ask about a private kazan.</span></div>
+            <div class="field"><label for="b-area">Seating</label><select id="b-area"><option>Main room</option><option>Topchan (floor seating)</option><option>Terrace</option></select></div>
+            <div class="field full"><label for="b-note">Notes</label><textarea id="b-note" placeholder="Birthday, high chair, allergies"></textarea></div>
+            <div class="field full"><button class="btn" type="submit">Request booking</button><span class="hint">Demo form: nothing is sent.</span></div>
+          </form>
+        </div>
+        <aside class="card hours">
+          <h3>Opening hours</h3>
+          <table id="hoursTable"></table>
+          <p class="addr"><strong>88 Harbour Lane</strong>Phone: +1 416 555 0140</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© Kazan &amp; Tandoor</span>
+    <span class="concept">Concept site: a fictional restaurant, built as a portfolio demo.</span>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const MENU = {
+    "Plov": [
+      { n: "Tashkent wedding plov", p: 19, d: "Lamb, yellow carrot, chickpeas, raisins, quail egg and kazy.", t: [] },
+      { n: "Samarkand plov", p: 18, d: "Rice and carrot in layers, lamb on top, the way Samarkand serves it.", t: [] },
+      { n: "Vegetable plov", p: 15, d: "Pumpkin, chickpeas, barberries and garlic heads. Cooked in a separate kazan.", t: ["veg"] },
+      { n: "Family kazan for 4", p: 68, d: "Wedding plov on a lagan platter with two salads and bread.", t: [] }
+    ],
+    "Tandoor": [
+      { n: "Lamb samsa", p: 6, d: "Flaky dough, lamb and onion, baked on the tandoor wall.", t: [] },
+      { n: "Pumpkin samsa", p: 5, d: "Seasonal pumpkin with onion and black pepper.", t: ["veg"] },
+      { n: "Obi non", p: 4, d: "Round tandoor bread with nigella seeds.", t: ["veg"] },
+      { n: "Tandoor lamb ribs", p: 24, d: "Slow-baked over cotton-stem embers, served with achichuk.", t: [] }
+    ],
+    "Soups & noodles": [
+      { n: "Lagman", p: 16, d: "Hand-pulled noodles, beef, peppers and a spicy tomato broth.", t: ["hot"] },
+      { n: "Shurpa", p: 14, d: "Clear lamb broth with potato, carrot and fresh herbs.", t: [] },
+      { n: "Mastava", p: 13, d: "Rice and vegetable soup finished with suzma.", t: ["veg"] },
+      { n: "Fried lagman", p: 17, d: "Wok-fried noodles with beef, garlic and chili.", t: ["hot"] }
+    ],
+    "Salads": [
+      { n: "Achichuk", p: 7, d: "Tomato, sweet onion and red pepper. Made to cut through the plov.", t: ["veg"] },
+      { n: "Tashkent salad", p: 10, d: "Daikon, beef, egg and crisp onion.", t: [] },
+      { n: "Cucumber chili salad", p: 9, d: "Cucumber, cilantro and a hot garlic dressing.", t: ["veg", "hot"] }
+    ],
+    "Tea": [
+      { n: "Green tea pot", p: 5, d: "Served in a choynak with piala cups. Refills are free.", t: ["veg"] },
+      { n: "Black tea with lemon", p: 5, d: "Strong, with lemon and sugar on the side.", t: ["veg"] },
+      { n: "Halva and dried fruit", p: 8, d: "Sesame halva, apricots, raisins and walnuts.", t: ["veg"] }
+    ]
+  };
+  const tags = { veg: "Vegetarian", hot: "Spicy" };
+  const names = Object.keys(MENU);
+  let active = names[0];
+
+  function renderTabs() {
+    $("tabs").innerHTML = names.map((n, i) =>
+      `<button class="tab" role="tab" id="tab-${i}" aria-selected="${n === active}" type="button" data-n="${n}">${n}</button>`).join("");
+  }
+  function renderMenu() {
+    const veg = $("vegOnly").checked, hideHot = $("hideHot").checked;
+    const items = MENU[active].filter((it) => (!veg || it.t.includes("veg")) && (!hideHot || !it.t.includes("hot")));
+    $("menuList").setAttribute("aria-labelledby", "tab-" + names.indexOf(active));
+    $("menuList").innerHTML = items.length ? items.map((it) => `
+      <article class="item">
+        <h3>${it.n}</h3><span class="price">$${it.p}</span>
+        <p>${it.d}</p>
+        ${it.t.length ? `<div class="tags">${it.t.map((t) => `<span class="${t}">${tags[t]}</span>`).join("")}</div>` : ""}
+      </article>`).join("") : `<p class="empty">No dishes in this section match your filters.</p>`;
+  }
+  $("tabs").addEventListener("click", (e) => {
+    const b = e.target.closest(".tab"); if (!b) return;
+    active = b.dataset.n; renderTabs(); renderMenu();
+  });
+  $("tabs").addEventListener("keydown", (e) => {
+    if (!["ArrowRight", "ArrowLeft"].includes(e.key)) return;
+    const i = names.indexOf(active) + (e.key === "ArrowRight" ? 1 : -1);
+    active = names[(i + names.length) % names.length]; renderTabs(); renderMenu();
+    $("tab-" + names.indexOf(active)).focus();
+  });
+  $("vegOnly").addEventListener("change", renderMenu);
+  $("hideHot").addEventListener("change", renderMenu);
+
+  // Hours (0 = Sunday)
+  const HOURS = [[12, 21], null, [11, 22], [11, 22], [11, 22], [11, 23], [11, 23]];
+  const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const fmt = (h) => String(h).padStart(2, "0") + ":00";
+  function renderHours() {
+    const now = new Date(), d = now.getDay(), h = now.getHours() + now.getMinutes() / 60;
+    const order = [1, 2, 3, 4, 5, 6, 0];
+    $("hoursTable").innerHTML = order.map((i) =>
+      `<tr class="${i === d ? "today" : ""}"><td>${DAYS[i]}${i === d ? " (today)" : ""}</td><td>${HOURS[i] ? fmt(HOURS[i][0]) + "–" + fmt(HOURS[i][1]) : "Closed"}</td></tr>`).join("");
+    const today = HOURS[d];
+    const open = today && h >= today[0] && h < today[1];
+    $("status").classList.toggle("open", !!open);
+    let text;
+    if (open) text = `Open until ${fmt(today[1])}`;
+    else {
+      let k = 0, next;
+      do { k++; next = HOURS[(d + k) % 7]; } while (!next && k < 7);
+      if (today && h < today[0]) text = `Opens today at ${fmt(today[0])}`;
+      else text = `Closed · opens ${k === 1 ? "tomorrow" : DAYS[(d + k) % 7]} ${fmt(next[0])}`;
+    }
+    $("statusText").textContent = text;
+  }
+
+  // Booking form
+  const sizeSel = $("b-size");
+  for (let n = 1; n <= 10; n++) sizeSel.add(new Option(`${n} ${n === 1 ? "guest" : "guests"}`, n, false, n === 4));
+  const dateIn = $("b-date");
+  const iso = (dt) => `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, "0")}-${String(dt.getDate()).padStart(2, "0")}`;
+  const today = new Date();
+  dateIn.min = iso(today);
+  const max = new Date(today); max.setDate(max.getDate() + 60); dateIn.max = iso(max);
+  const tomorrow = new Date(today); tomorrow.setDate(tomorrow.getDate() + 1);
+  if (tomorrow.getDay() === 1) tomorrow.setDate(tomorrow.getDate() + 1);
+  dateIn.value = iso(tomorrow);
+  function fillTimes() {
+    const sel = $("b-time"), prev = sel.value;
+    const d = dateIn.value ? new Date(dateIn.value + "T12:00") : null;
+    const hrs = d ? HOURS[d.getDay()] : null;
+    sel.innerHTML = "";
+    if (!hrs) { sel.add(new Option("Closed this day", "")); return; }
+    for (let h = hrs[0]; h < hrs[1] - 1; h++) for (const m of ["00", "30"]) sel.add(new Option(`${String(h).padStart(2, "0")}:${m}`, `${h}:${m}`));
+    sel.value = [...sel.options].some((o) => o.value === prev) ? prev : "12:00";
+  }
+  dateIn.addEventListener("change", fillTimes);
+  fillTimes();
+
+  function setErr(id, msg) {
+    const f = $(id).closest(".field"), m = f.querySelector(".msg");
+    f.classList.toggle("bad", !!msg);
+    if (m) { m.textContent = msg || ""; m.hidden = !msg; }
+    return !msg;
+  }
+  $("bookingForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = $("b-name").value.trim(), phone = $("b-phone").value.replace(/[^\d+]/g, "");
+    let ok = true;
+    ok = setErr("b-name", name.length < 2 ? "Enter the name for the booking." : "") && ok;
+    ok = setErr("b-phone", phone.replace(/\D/g, "").length < 7 ? "Enter a phone number we can call." : "") && ok;
+    const dv = dateIn.value;
+    ok = setErr("b-date", !dv ? "Pick a date." : (dv < dateIn.min || dv > dateIn.max) ? "Pick a date within the next 60 days." : "") && ok;
+    ok = setErr("b-time", !$("b-time").value ? "We're closed that day. Pick another date." : "") && ok;
+    if (!ok) return;
+    const nice = new Date(dv + "T12:00").toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "long" });
+    const t = $("b-time").selectedOptions[0].text;
+    const area = $("b-area").value;
+    const card = $("bookCard");
+    card.innerHTML = `<div class="confirm" role="status">
+      <p class="eyebrow">Request received</p>
+      <h3>Table for ${sizeSel.value}, ${nice} at ${t}</h3>
+      <dl><dt>Name</dt><dd></dd><dt>Seating</dt><dd></dd></dl>
+      <p class="hint">In a live site the restaurant would confirm by SMS. This demo sends nothing.</p>
+      <button class="btn" type="button" id="again">Make another booking</button></div>`;
+    const dds = card.querySelectorAll("dd");
+    dds[0].textContent = name; dds[1].textContent = area;
+    card.querySelector("#again").addEventListener("click", () => location.reload());
+  });
+
+  renderTabs(); renderMenu(); renderHours();
+  setInterval(renderHours, 60000);
+})();
+</script>
+
+</body>
+</html>

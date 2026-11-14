@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Shiftbook Scheduling</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Public+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: hero = working rota grid (the product itself); features as a 3-up row; pricing driven by one staff-count slider */
+:root {
+  --bg: #f5f6f2;
+  --surface: #ffffff;
+  --ink: #15201b;
+  --muted: #56635c;
+  --line: #dbe0d8;
+  --accent: #1f7a4d;
+  --accent-soft: #e2f1e8;
+  --accent-ink: #ffffff;
+  --ok: #1f7a4d;
+  --warn: #c98a06;
+  --warn-soft: #fbf0d4;
+  --bad: #c0392b;
+  --bad-soft: #f9e0dc;
+  --display: "Schibsted Grotesk", "Arial", system-ui, sans-serif;
+  --body: "Public Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --mono: "DM Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #0f1613; --surface: #16201b; --ink: #e6eee9; --muted: #9db0a5; --line: #263630; --accent: #4cc48a; --accent-soft: #173527; --accent-ink: #08140e; --ok: #4cc48a; --warn: #e8b23a; --warn-soft: #3a2f12; --bad: #ef7464; --bad-soft: #3d1c18; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #0f1613; --surface: #16201b; --ink: #e6eee9; --muted: #9db0a5; --line: #263630; --accent: #4cc48a; --accent-soft: #173527; --accent-ink: #08140e; --ok: #4cc48a; --warn: #e8b23a; --warn-soft: #3a2f12; --bad: #ef7464; --bad-soft: #3d1c18; color-scheme: dark; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.55; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.wrap { max-width: 1140px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.06; text-wrap: balance; letter-spacing: -0.02em; }
+h1 { font-size: clamp(2.4rem, 5.2vw, 4.1rem); font-weight: 800; }
+h2 { font-size: clamp(1.8rem, 3.4vw, 2.6rem); font-weight: 800; }
+h3 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; }
+p { margin: 0; }
+.eyebrow { font: 500 0.78rem var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: 600 1rem var(--body); padding: 13px 22px; border-radius: 10px; border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); cursor: pointer; text-decoration: none; transition: transform .15s, filter .15s; }
+.btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
+.btn.ghost { background: var(--surface); color: var(--ink); border-color: var(--line); }
+
+header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.nav { display: flex; align-items: center; gap: 22px; padding-block: 14px; }
+.logo { display: flex; align-items: center; gap: 10px; font: 800 1.2rem var(--display); text-decoration: none; color: var(--ink); }
+.logo i { display: grid; grid-template-columns: repeat(3, 6px); gap: 2px; }
+.logo i b { width: 6px; height: 6px; border-radius: 1px; background: var(--accent); }
+.logo i b:nth-child(3n) { background: var(--line); }
+.nav-links { display: flex; gap: 22px; margin-left: auto; }
+.nav-links a { color: var(--muted); text-decoration: none; font-weight: 500; }
+.nav-links a:hover { color: var(--ink); }
+.nav .btn { padding: 9px 16px; font-size: 0.92rem; }
+@media (max-width: 760px) { .nav-links { display: none; } .nav .btn { margin-left: auto; } }
+
+.hero { padding-block: 56px 64px; display: grid; gap: 40px; }
+.hero-copy { display: grid; gap: 20px; max-width: 760px; }
+.hero-copy .lede { font-size: 1.15rem; color: var(--muted); max-width: 56ch; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* rota demo */
+.rota { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.rota-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+.rota-bar h3 { font-size: 1rem; }
+.rota-bar .week { font: 0.85rem var(--mono); color: var(--muted); }
+.rota-bar .spacer { flex: 1; }
+.summary { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill { font: 500 0.78rem var(--mono); padding: 5px 10px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line); white-space: nowrap; }
+.pill.ok { background: var(--accent-soft); border-color: transparent; color: var(--ok); }
+.pill.warn { background: var(--warn-soft); border-color: transparent; color: var(--warn); }
+.pill.bad { background: var(--bad-soft); border-color: transparent; color: var(--bad); }
+.grid-scroll { overflow-x: auto; }
+table.grid { width: 100%; min-width: 760px; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.grid th, .grid td { border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); padding: 10px; vertical-align: top; }
+.grid th:last-child, .grid td:last-child { border-right: 0; }
+.grid tr:last-child td { border-bottom: 0; }
+.grid thead th { font: 500 0.78rem var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); text-align: left; background: var(--bg); }
+.grid tbody th { text-align: left; font-weight: 600; width: 120px; }
+.grid tbody th small { display: block; font: 0.75rem var(--mono); color: var(--muted); font-weight: 400; }
+.cell { display: grid; gap: 6px; }
+.shift { font-size: 0.8rem; padding: 5px 8px; border-radius: 6px; background: var(--accent-soft); color: var(--ink); border-left: 3px solid var(--ok); line-height: 1.3; }
+.shift span { display: block; font: 0.72rem var(--mono); color: var(--muted); }
+.shift.gap { background: var(--bad-soft); border-left-color: var(--bad); }
+.shift.gap span { color: var(--bad); }
+.shift.new { animation: pop .45s ease; }
+@keyframes pop { from { transform: scale(.92); background: var(--warn-soft); } to { transform: none; } }
+.rota-foot { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between; padding: 14px 20px; border-top: 1px solid var(--line); font-size: 0.9rem; color: var(--muted); }
+
+section { padding-block: 72px; }
+.head { display: grid; gap: 12px; margin-bottom: 36px; max-width: 640px; }
+.head p { color: var(--muted); font-size: 1.05rem; }
+.features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 860px) { .features { grid-template-columns: 1fr; } }
+.feature { display: grid; gap: 10px; align-content: start; padding-top: 18px; border-top: 2px solid var(--ink); min-width: 0; }
+.feature p { color: var(--muted); }
+.feature .stat { font: 500 0.82rem var(--mono); color: var(--accent); }
+
+/* pricing */
+.price-ctl { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 28px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; margin-bottom: 20px; }
+.slider { display: grid; gap: 8px; flex: 1 1 280px; min-width: 0; }
+.slider label { font-weight: 600; }
+.slider output { font: 500 1rem var(--mono); color: var(--accent); }
+.slider input { width: 100%; accent-color: var(--accent); }
+.toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; padding: 3px; background: var(--bg); }
+.toggle button { font: 600 0.9rem var(--body); border: 0; background: transparent; color: var(--muted); padding: 8px 14px; border-radius: 8px; cursor: pointer; }
+.toggle button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px color-mix(in srgb, var(--ink) 15%, transparent); }
+.toggle .save { font: 500 0.72rem var(--mono); color: var(--accent); margin-left: 4px; }
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 900px) { .plans { grid-template-columns: 1fr; } }
+.plan { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 24px; display: grid; gap: 16px; min-width: 0; }
+.plan.pick { border: 2px solid var(--accent); }
+.plan .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.badge { font: 500 0.72rem var(--mono); text-transform: uppercase; letter-spacing: .06em; padding: 3px 8px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); }
+.amount { font: 800 2.6rem var(--display); line-height: 1; font-variant-numeric: tabular-nums; }
+.amount small { font: 500 0.95rem var(--body); color: var(--muted); margin-left: 4px; }
+.calcline { font: 0.82rem var(--mono); color: var(--muted); }
+.plan ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.plan li { padding-left: 22px; position: relative; font-size: 0.95rem; }
+.plan li::before { content: ""; position: absolute; left: 2px; top: 7px; width: 10px; height: 6px; border-left: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(-45deg); }
+.plan .note { font-size: 0.85rem; color: var(--warn); }
+
+.faq { display: grid; gap: 10px; max-width: 780px; }
+.faq details { border-bottom: 1px solid var(--line); padding-block: 6px; }
+.faq summary { cursor: pointer; font-weight: 600; padding-block: 12px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--mono); color: var(--accent); }
+.faq details[open] summary::after { content: "–"; }
+.faq details p { color: var(--muted); padding-bottom: 14px; }
+
+footer { border-top: 1px solid var(--line); padding-block: 32px; color: var(--muted); font-size: 0.9rem; }
+.foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px; }
+.concept { font: 0.78rem var(--mono); }
+</style>
+</head>
+<body>
+
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top"><i aria-hidden="true"><b></b><b></b><b></b><b></b><b></b><b></b></i>Shiftbook</a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn" href="#pricing">Start free</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Staff scheduling for cafés and restaurants</p>
+      <h1>Build next week's rota in ten minutes, not two hours.</h1>
+      <p class="lede">Set how many people each shift needs. Shiftbook fills the week from staff availability, flags the gaps, and shows labor cost before you publish.</p>
+      <div class="actions">
+        <a class="btn" href="#pricing">Start free for up to 10 staff</a>
+        <button class="btn ghost" type="button" id="fillBtn2">Try auto-fill on the demo</button>
+      </div>
+    </div>
+
+    <div class="rota" aria-label="Interactive schedule demo">
+      <div class="rota-bar">
+        <h3>Corner Café · Rota</h3>
+        <span class="week">Week of 17–23 Nov</span>
+        <span class="spacer"></span>
+        <div class="summary" id="summary"></div>
+      </div>
+      <div class="grid-scroll">
+        <table class="grid" id="grid"></table>
+      </div>
+      <div class="rota-foot">
+        <span id="footText">3 shifts still need someone.</span>
+        <div class="actions">
+          <button class="btn ghost" type="button" id="resetBtn">Reset demo</button>
+          <button class="btn" type="button" id="fillBtn">Auto-fill gaps</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="features">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Features</p>
+        <h2>Everything a manager does on Sunday night, done for them.</h2>
+      </div>
+      <div class="features">
+        <article class="feature"><p class="stat">Availability</p><h3>Staff set their own hours</h3><p>Each person marks when they can work from their phone. The rota only offers shifts that fit.</p></article>
+        <article class="feature"><p class="stat">Coverage</p><h3>Gaps show up in red</h3><p>Set the headcount each role needs per shift. Anything short is flagged before the week starts.</p></article>
+        <article class="feature"><p class="stat">Labor cost</p><h3>Know the bill before you publish</h3><p>Hourly rates and overtime rules turn the rota into a weekly cost, so you can trim a shift instead of guessing.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" style="background: var(--surface); border-block: 1px solid var(--line);">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Pricing</p>
+        <h2>Pay per person on the rota.</h2>
+        <p>Move the slider to your team size. The prices update for each plan.</p>
+      </div>
+      <div class="price-ctl">
+        <div class="slider">
+          <label for="staff">Team size: <output id="staffOut" for="staff">18 staff</output></label>
+          <input type="range" id="staff" min="1" max="80" value="18">
+        </div>
+        <div class="toggle" role="group" aria-label="Billing period">
+          <button type="button" id="bMonthly" aria-pressed="true">Monthly</button>
+          <button type="button" id="bYearly" aria-pressed="false">Yearly <span class="save">−20%</span></button>
+        </div>
+      </div>
+      <div class="plans" id="plans"></div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">FAQ</p>
+        <h2>Common questions</h2>
+      </div>
+      <div class="faq">
+        <details open><summary>Who counts as a staff member?</summary><p>Anyone you put on the rota in a billing month. Managers who only build schedules are free.</p></details>
+        <details><summary>Can I run several locations?</summary><p>Yes. Each location has its own rota and coverage rules. Staff who work at two sites count once.</p></details>
+        <details><summary>What happens when I go over 10 staff on Starter?</summary><p>Nothing breaks. You'll be asked to pick Team or Business before you publish the next rota.</p></details>
+        <details><summary>Can I cancel anytime?</summary><p>Monthly plans cancel at the end of the month. Yearly plans are refunded for unused full months.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© Shiftbook</span>
+    <span class="concept">Concept site: Shiftbook is a fictional product, built as a portfolio demo.</span>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const ROLES = [
+    { role: "Barista", rate: 17, shift: "07:00–15:00", hrs: 8 },
+    { role: "Kitchen", rate: 19, shift: "09:00–17:00", hrs: 8 },
+    { role: "Floor", rate: 16, shift: "11:00–19:00", hrs: 8 }
+  ];
+  const START = {
+    Barista: ["Lena", "Lena", "Omar", "Omar", "Lena", null, "Priya"],
+    Kitchen: ["Marco", "Marco", "Marco", null, "Dina", "Dina", "Dina"],
+    Floor: ["Sam", "Priya", "Sam", "Sam", "Priya", "Sam", null]
+  };
+  const FILL = { Barista: [null, null, null, null, null, "Omar", null], Kitchen: [null, null, null, "Dina", null, null, null], Floor: [null, null, null, null, null, null, "Priya"] };
+  let state, justFilled = new Set();
+
+  function reset() { state = JSON.parse(JSON.stringify(START)); justFilled.clear(); render(); }
+
+  function render() {
+    let html = `<thead><tr><th scope="col">Role</th>${DAYS.map((d) => `<th scope="col">${d}</th>`).join("")}</tr></thead><tbody>`;
+    let gaps = 0, hours = 0, cost = 0;
+    for (const r of ROLES) {
+      html += `<tr><th scope="row">${r.role}<small>$${r.rate}/h · ${r.shift}</small></th>`;
+      state[r.role].forEach((who, i) => {
+        const key = r.role + i;
+        if (who) { hours += r.hrs; cost += r.hrs * r.rate; }
+        else gaps++;
+        html += `<td><div class="cell">${who
+          ? `<div class="shift${justFilled.has(key) ? " new" : ""}">${who}<span>${r.shift}</span></div>`
+          : `<div class="shift gap">Unfilled<span>needs 1</span></div>`}</div></td>`;
+      });
+      html += `</tr>`;
+    }
+    $("grid").innerHTML = html + "</tbody>";
+    $("summary").innerHTML =
+      `<span class="pill ${gaps ? "bad" : "ok"}">${gaps ? gaps + " gaps" : "All shifts covered"}</span>` +
+      `<span class="pill">${hours} staff hours</span>` +
+      `<span class="pill">$${cost.toLocaleString("en-US")} labor</span>`;
+    $("footText").textContent = gaps ? `${gaps} shift${gaps > 1 ? "s" : ""} still need someone.` : "Every shift is covered. Ready to publish.";
+    $("fillBtn").disabled = !gaps;
+    $("fillBtn").style.opacity = gaps ? "1" : ".5";
+  }
+
+  function autofill() {
+    justFilled.clear();
+    for (const r of ROLES) state[r.role] = state[r.role].map((w, i) => {
+      if (w) return w;
+      justFilled.add(r.role + i);
+      return FILL[r.role][i];
+    });
+    render();
+  }
+  $("fillBtn").addEventListener("click", autofill);
+  $("fillBtn2").addEventListener("click", () => { $("grid").scrollIntoView({ behavior: "smooth", block: "center" }); setTimeout(autofill, 350); });
+  $("resetBtn").addEventListener("click", reset);
+
+  // Pricing
+  const PLANS = [
+    { id: "starter", name: "Starter", per: 0, max: 10, tag: "", feats: ["Up to 10 staff", "1 location", "Availability and gaps", "Rota by email"] },
+    { id: "team", name: "Team", per: 3, max: Infinity, tag: "Most popular", feats: ["Unlimited staff", "Up to 3 locations", "Labor cost and overtime rules", "Shift swaps in the app"] },
+    { id: "business", name: "Business", per: 5, max: Infinity, tag: "", feats: ["Everything in Team", "Unlimited locations", "Payroll export (CSV)", "Priority support"] }
+  ];
+  let yearly = false;
+  function renderPlans() {
+    const n = Number($("staff").value);
+    $("staffOut").textContent = `${n} staff`;
+    const best = n <= 10 ? "starter" : "team";
+    $("plans").innerHTML = PLANS.map((p) => {
+      const monthly = p.per * n * (yearly ? 0.8 : 1);
+      const over = n > p.max;
+      const calc = p.per ? `${n} × $${(p.per * (yearly ? 0.8 : 1)).toFixed(2)} per staff` : "Free forever";
+      return `<article class="plan${p.id === best ? " pick" : ""}">
+        <div class="top"><h3>${p.name}</h3>${p.id === best ? `<span class="badge">Fits your team</span>` : p.tag ? `<span class="badge">${p.tag}</span>` : ""}</div>
+        <div><p class="amount">$${monthly.toLocaleString("en-US", { maximumFractionDigits: 2 })}<small>/ month</small></p>
+        <p class="calcline">${calc}${p.per && yearly ? ` · billed $${(monthly * 12).toLocaleString("en-US", { maximumFractionDigits: 0 })}/year` : ""}</p></div>
+        ${over ? `<p class="note">Starter covers up to 10 staff. Your team needs Team or Business.</p>` : ""}
+        <ul>${p.feats.map((f) => `<li>${f}</li>`).join("")}</ul>
+        <a class="btn ${p.id === best ? "" : "ghost"}" href="#top">${p.per ? "Start 14-day trial" : "Start free"}</a>
+      </article>`;
+    }).join("");
+  }
+  $("staff").addEventListener("input", renderPlans);
+  $("bMonthly").addEventListener("click", () => { yearly = false; $("bMonthly").setAttribute("aria-pressed", "true"); $("bYearly").setAttribute("aria-pressed", "false"); renderPlans(); });
+  $("bYearly").addEventListener("click", () => { yearly = true; $("bYearly").setAttribute("aria-pressed", "true"); $("bMonthly").setAttribute("aria-pressed", "false"); renderPlans(); });
+
+  reset(); renderPlans();
+})();
+</script>
+
+</body>
+</html>
