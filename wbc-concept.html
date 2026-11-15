@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Weinberg Business Center Concept</title>
+<meta name="description" content="Homepage concept for the Weinberg Business Center, a corporate conference venue in Honolulu: two room configurations, event support facilities, simple day packages and an inquiry form.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/*
+  Concept direction: one conference hall that becomes two rooms.
+  The hero diagram morphs 252 classroom seats into 126 seats at round tables.
+  Palette: harbor blues and lagoon green with a plumeria-gold accent used only for actions.
+*/
+:root {
+  --bg: #f4f7f6;
+  --surface: #ffffff;
+  --ink: #13262d;
+  --muted: #4f646b;
+  --line: #d5e0de;
+  --harbor: #1d4b5b;
+  --harbor-deep: #12333f;
+  --lagoon: #2f7f7b;
+  --lagoon-soft: #e1efed;
+  --gold: #e3ad3f;
+  --gold-ink: #3a2a06;
+  --display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --body: "Figtree", "Segoe UI", system-ui, sans-serif;
+  --radius-lg: 18px;
+  --radius-sm: 8px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1a1f; --surface: #14242a; --ink: #e6efee; --muted: #9fb3b4; --line: #26393f;
+    --harbor: #7fb6c6; --harbor-deep: #0a171c; --lagoon: #62b3ad; --lagoon-soft: #18302f;
+    --gold: #f0bd55; --gold-ink: #2a1e03; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1a1f; --surface: #14242a; --ink: #e6efee; --muted: #9fb3b4; --line: #26393f;
+  --harbor: #7fb6c6; --harbor-deep: #0a171c; --lagoon: #62b3ad; --lagoon-soft: #18302f;
+  --gold: #f0bd55; --gold-ink: #2a1e03; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--body); -webkit-font-smoothing: antialiased; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.05; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+h1 { font-size: clamp(2.8rem, 6.2vw, 5rem); }
+h2 { font-size: clamp(2.1rem, 4.2vw, 3.2rem); }
+h3 { font-size: 1.7rem; }
+p { margin: 0; }
+.lede { font-size: 1.15rem; color: var(--muted); max-width: 58ch; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 999px; font: 600 1rem var(--body); text-decoration: none; border: 1.5px solid transparent; cursor: pointer; }
+.btn-primary { background: var(--gold); color: var(--gold-ink); }
+.btn-primary:hover { filter: brightness(1.05); }
+.btn-ghost { border-color: var(--line); color: var(--ink); background: transparent; }
+.btn-ghost:hover { border-color: var(--harbor); }
+
+/* Concept notice */
+.notice { background: var(--harbor-deep); color: #cfe2e4; font-size: 0.86rem; }
+.notice .wrap { padding-block: 8px; }
+
+/* Header */
+.site-head { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.site-head .wrap { display: flex; align-items: center; gap: 24px; min-height: 68px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; margin-right: auto; }
+.brand-mark { width: 40px; height: 40px; border-radius: 50%; background: var(--harbor); color: #fff; display: grid; place-items: center; font: 700 0.95rem var(--display); letter-spacing: .02em; flex: none; }
+.brand-name { font: 600 1.25rem/1.05 var(--display); }
+.brand-name small { display: block; font: 500 0.78rem var(--body); color: var(--muted); letter-spacing: 0; }
+.nav { display: flex; gap: 22px; }
+.nav a { text-decoration: none; color: var(--muted); font-weight: 500; font-size: 0.97rem; }
+.nav a:hover { color: var(--ink); }
+.head-cta { min-height: 42px; padding: 0 18px; font-size: 0.95rem; }
+.menu-btn { display: none; }
+@media (max-width: 960px) {
+  .nav { display: none; position: absolute; top: 68px; left: 0; right: 0; flex-direction: column; gap: 0; background: var(--surface); border-bottom: 1px solid var(--line); padding: 8px 16px 16px; }
+  .nav.open { display: flex; }
+  .nav a { padding: 12px 0; border-bottom: 1px solid var(--line); color: var(--ink); }
+  .menu-btn { display: inline-flex; min-height: 42px; padding: 0 16px; }
+  .head-cta { display: none; }
+}
+
+/* Hero */
+.hero { padding-block: 56px 72px; }
+.hero-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 48px; align-items: center; }
+.hero-grid > * { min-width: 0; }
+.hero-copy { display: grid; gap: 22px; }
+.hero-place { color: var(--lagoon); font-weight: 600; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.plan-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 18px; display: grid; gap: 14px; }
+.plan-switch { display: grid; grid-template-columns: 1fr 1fr; background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 4px; }
+.plan-switch button { min-height: 44px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font: 600 0.98rem var(--body); cursor: pointer; }
+.plan-switch button[aria-pressed="true"] { background: var(--harbor); color: #fff; }
+.plan-svg { width: 100%; height: auto; border-radius: 12px; background: var(--lagoon-soft); }
+.plan-svg .wall { fill: none; stroke: var(--harbor); stroke-width: 3; }
+.plan-svg .stage { fill: var(--harbor); }
+.plan-svg .stage-label { fill: #fff; font: 600 11px var(--body); letter-spacing: .04em; }
+.plan-svg .desk { fill: color-mix(in srgb, var(--harbor) 22%, transparent); transition: opacity .5s ease; }
+.plan-svg .round { fill: color-mix(in srgb, var(--harbor) 22%, transparent); transition: opacity .5s ease; }
+.plan-svg .seat { fill: var(--lagoon); transition: transform .9s cubic-bezier(.6,.05,.25,1), opacity .5s ease; }
+.plan-svg .door { stroke: var(--gold); stroke-width: 5; }
+.plan-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.plan-meta div { border-top: 2px solid var(--line); padding-top: 8px; }
+.plan-meta dt { font-size: 0.82rem; color: var(--muted); }
+.plan-meta dd { margin: 0; font-weight: 600; }
+.plan-meta .big { font: 600 2rem/1 var(--display); }
+.plan-note { font-size: 0.82rem; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { .plan-svg .seat, .plan-svg .desk, .plan-svg .round { transition: none !important; } }
+@media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; gap: 32px; } .hero { padding-top: 36px; } }
+
+/* Sections */
+.section { padding-block: 88px; }
+.section-alt { background: var(--surface); border-block: 1px solid var(--line); }
+.section-head { display: grid; gap: 14px; margin-bottom: 40px; max-width: 760px; }
+
+/* Placeholder photo */
+.ph { position: relative; overflow: hidden; border-radius: var(--radius-sm); background:
+  linear-gradient(160deg, color-mix(in srgb, var(--harbor) 85%, #000) 0%, var(--lagoon) 100%); color: #e9f3f2; min-height: 160px; }
+.ph::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(135deg, rgba(255,255,255,.06) 0 2px, transparent 2px 14px); }
+.ph span { position: absolute; left: 14px; bottom: 12px; right: 14px; font-size: 0.82rem; font-weight: 500; }
+.ph svg { position: absolute; inset: 0; margin: auto; width: 46%; height: auto; opacity: .55; }
+
+/* Configurations gallery */
+.config-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+.config { display: grid; gap: 16px; }
+.config > * { min-width: 0; }
+.gallery { display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr; gap: 8px; height: 320px; }
+.gallery button { padding: 0; border: 0; cursor: zoom-in; font: inherit; text-align: left; }
+.gallery button:first-child { grid-row: span 2; }
+.gallery .ph { width: 100%; height: 100%; min-height: 0; }
+.config-title { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.config-title p { color: var(--muted); }
+.config-links { display: flex; flex-wrap: wrap; gap: 10px; }
+.same-price { margin-top: 28px; padding: 18px 22px; border-radius: var(--radius-sm); background: var(--lagoon-soft); display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: center; justify-content: space-between; }
+.same-price strong { font-weight: 600; }
+@media (max-width: 860px) { .config-grid { grid-template-columns: 1fr; } .gallery { height: 260px; } }
+
+/* Day at WBC: a real sequence by time of day */
+.day { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+.day li { list-style: none; display: grid; gap: 10px; align-content: start; }
+.day .ph { aspect-ratio: 4 / 5; min-height: 0; }
+.day time { font: 600 1.4rem/1 var(--display); color: var(--lagoon); }
+.day h3 { font-size: 1.35rem; }
+.day p { color: var(--muted); font-size: 0.95rem; }
+.day ol { padding: 0; margin: 0; display: contents; }
+@media (max-width: 980px) { .day { grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr)); } .day .ph { aspect-ratio: 16 / 10; } }
+
+/* Facilities */
+.facilities { display: grid; grid-template-columns: 1.25fr 1fr; gap: 28px; }
+.facilities > * { min-width: 0; }
+.fac-feature { display: grid; gap: 14px; }
+.fac-feature .ph { aspect-ratio: 16 / 10; min-height: 0; }
+.thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.thumbs button { padding: 0; border: 0; cursor: zoom-in; }
+.thumbs .ph { aspect-ratio: 1; min-height: 0; }
+.fac-side { display: grid; gap: 28px; align-content: start; }
+.fac-room { display: grid; grid-template-columns: 140px 1fr; gap: 16px; align-items: start; }
+.fac-room .ph { aspect-ratio: 1; min-height: 0; }
+.inclusions { border-top: 1px solid var(--line); padding-top: 22px; display: grid; gap: 12px; }
+.inclusions ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.inclusions li { padding-left: 26px; position: relative; }
+.inclusions li::before { content: ""; position: absolute; left: 2px; top: .55em; width: 12px; height: 7px; border-left: 2px solid var(--lagoon); border-bottom: 2px solid var(--lagoon); transform: rotate(-45deg); }
+.muted { color: var(--muted); }
+@media (max-width: 900px) { .facilities { grid-template-columns: 1fr; } }
+
+/* Pricing */
+.pricing { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+.pricing > * { min-width: 0; }
+.days { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 18px 0 22px; }
+.days button { min-height: 76px; border-radius: var(--radius-sm); border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; font: 600 1rem var(--body); display: grid; place-content: center; gap: 2px; }
+.days button span { font: 600 1.9rem/1 var(--display); }
+.days button[aria-pressed="true"] { border-color: var(--harbor); background: var(--harbor); color: #fff; }
+.quote { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 26px; display: grid; gap: 14px; }
+.quote-total { font: 600 3.2rem/1 var(--display); }
+.quote-sub { color: var(--muted); }
+.sample-tag { justify-self: start; font-size: 0.78rem; font-weight: 600; color: var(--gold-ink); background: color-mix(in srgb, var(--gold) 55%, transparent); padding: 3px 10px; border-radius: 999px; }
+.conditions { margin: 0; padding-left: 20px; color: var(--muted); display: grid; gap: 6px; font-size: 0.96rem; }
+@media (max-width: 860px) { .pricing { grid-template-columns: 1fr; gap: 24px; } }
+
+/* Community: deliberately quiet */
+.community { padding-block: 64px; }
+.community-inner { display: grid; grid-template-columns: 1fr 1.2fr; gap: 36px; align-items: center; }
+.community-inner > * { min-width: 0; }
+.community-photos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.community-photos .ph { aspect-ratio: 3 / 4; min-height: 0; }
+.community h2 { font-size: clamp(1.7rem, 3vw, 2.2rem); }
+@media (max-width: 860px) { .community-inner { grid-template-columns: 1fr; } }
+
+/* Inquiry */
+.inquire { background: var(--harbor-deep); color: #e6f0f0; }
+.inquire .lede { color: #a9c3c6; }
+.inquire-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 48px; }
+.inquire-grid > * { min-width: 0; }
+.contact-points { margin-top: 28px; display: grid; gap: 14px; }
+.contact-points div { border-top: 1px solid rgba(255,255,255,.14); padding-top: 12px; }
+.contact-points dt { font-size: 0.85rem; color: #a9c3c6; }
+.contact-points dd { margin: 0; font-weight: 600; }
+form { background: var(--surface); color: var(--ink); border-radius: var(--radius-lg); padding: 28px; display: grid; gap: 18px; }
+.reasons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; border: 0; padding: 0; margin: 0; }
+.reasons legend { font-weight: 600; margin-bottom: 8px; }
+.reasons label { position: relative; }
+.reasons input { position: absolute; opacity: 0; inset: 0; }
+.reasons span { display: grid; place-items: center; text-align: center; min-height: 52px; padding: 6px 10px; border: 1.5px solid var(--line); border-radius: var(--radius-sm); font-weight: 600; font-size: 0.95rem; cursor: pointer; }
+.reasons input:checked + span { border-color: var(--harbor); background: var(--lagoon-soft); }
+.reasons input:focus-visible + span { outline: 3px solid var(--gold); outline-offset: 2px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.field { display: grid; gap: 6px; }
+.field label { font-weight: 600; font-size: 0.95rem; }
+.field input, .field select, .field textarea { font: 400 1rem var(--body); color: var(--ink); background: var(--bg); border: 1.5px solid var(--line); border-radius: var(--radius-sm); padding: 12px 14px; min-height: 48px; width: 100%; }
+.field textarea { min-height: 110px; resize: vertical; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--harbor); }
+.field [aria-invalid="true"] { border-color: #c2412d; }
+.err { color: #b33a27; font-size: 0.86rem; min-height: 0; }
+.form-foot { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between; }
+.form-foot p { font-size: 0.86rem; color: var(--muted); max-width: 38ch; }
+.sent { display: none; text-align: center; padding: 30px 10px; gap: 12px; }
+.sent h3 { font-size: 2rem; }
+form.is-sent > :not(.sent) { display: none; }
+form.is-sent .sent { display: grid; }
+@media (max-width: 900px) { .inquire-grid { grid-template-columns: 1fr; gap: 28px; } }
+@media (max-width: 560px) { .row { grid-template-columns: 1fr; } .reasons { grid-template-columns: 1fr; } form { padding: 20px; } }
+
+footer { padding-block: 32px; font-size: 0.9rem; color: var(--muted); }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; }
+
+/* Lightbox */
+dialog.lightbox { border: 0; padding: 0; background: transparent; max-width: min(1000px, 94vw); width: 100%; }
+dialog.lightbox::backdrop { background: rgba(6, 18, 22, .86); }
+.lb-inner { display: grid; gap: 12px; }
+.lb-inner .ph { aspect-ratio: 3 / 2; min-height: 0; border-radius: 12px; }
+.lb-bar { display: flex; justify-content: space-between; align-items: center; color: #fff; gap: 10px; }
+.lb-bar button { min-height: 44px; min-width: 44px; border-radius: 999px; border: 1px solid rgba(255,255,255,.35); background: transparent; color: #fff; font: 600 0.95rem var(--body); cursor: pointer; padding: 0 16px; }
+.lb-count { font-size: 0.9rem; opacity: .8; }
+</style>
+</head>
+<body>
+
+<div class="notice"><div class="wrap">Homepage concept prepared for the WBC proposal. Photos, prices and copy are placeholders until replaced with your brochure assets and Website Content Master.</div></div>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Weinberg Business Center, home">
+      <span class="brand-mark" aria-hidden="true">WBC</span>
+      <span class="brand-name">Weinberg Business Center<small>Honolulu, Hawaiʻi</small></span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#rooms">Rooms</a>
+      <a href="#experience">Your event</a>
+      <a href="#facilities">Facilities</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#inquire">Contact</a>
+    </nav>
+    <a class="btn btn-primary head-cta" href="#inquire">Check availability</a>
+    <button class="btn btn-ghost menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">Menu</button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="hero-place">Corporate conference venue in Honolulu</p>
+        <h1>One conference hall, set the way your event needs it.</h1>
+        <p class="lede">Seat 252 for a full classroom session or 126 for training and dining. Both layouts come with the same simple day package, an event support room and a garden lawn for networking.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#inquire">Check availability</a>
+          <a class="btn btn-ghost" href="#inquire" data-reason="tour">Book a tour</a>
+        </div>
+      </div>
+
+      <div class="plan-card" aria-labelledby="planHeading">
+        <h2 id="planHeading" class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Room configurations</h2>
+        <div class="plan-switch" role="group" aria-label="Choose a room configuration">
+          <button type="button" aria-pressed="true" data-plan="252">Conference 252</button>
+          <button type="button" aria-pressed="false" data-plan="126">Conference 126</button>
+        </div>
+        <svg class="plan-svg" id="plan" viewBox="0 0 600 430" role="img" aria-labelledby="planDesc">
+          <desc id="planDesc">Floor diagram of the conference hall in the classroom configuration with 252 seats.</desc>
+          <rect class="wall" x="20" y="20" width="560" height="390" rx="6"/>
+          <line class="door" x1="250" y1="410" x2="350" y2="410"/>
+          <rect class="stage" x="200" y="34" width="200" height="34" rx="4"/>
+          <text class="stage-label" x="300" y="56" text-anchor="middle">STAGE AND SCREEN</text>
+          <g id="desks"></g>
+          <g id="rounds"></g>
+          <g id="seats"></g>
+        </svg>
+        <dl class="plan-meta">
+          <div><dt>Capacity</dt><dd class="big" id="metaSeats">252</dd></div>
+          <div><dt>Layout</dt><dd id="metaLayout">Full classroom</dd></div>
+          <div><dt>Best for</dt><dd id="metaFor">Presentations and seminars</dd></div>
+        </dl>
+        <p class="plan-note">Illustrative diagram. The live site uses your detailed floor plans.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="rooms">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Two configurations of the same hall</h2>
+        <p class="lede">Each layout has its own photo gallery and a printable floor plan, so planners can share the exact setup with their team.</p>
+      </div>
+      <div class="config-grid">
+        <article class="config">
+          <div class="gallery" data-gallery="Conference 252">
+            <button type="button" aria-label="Open Conference 252 gallery, photo 1"><div class="ph"><span>Photo: presenter view, full classroom</span></div></button>
+            <button type="button" aria-label="Open Conference 252 gallery, photo 2"><div class="ph"><span>Photo: rear of hall</span></div></button>
+            <button type="button" aria-label="Open Conference 252 gallery, photo 3"><div class="ph"><span>Photo: aisle detail</span></div></button>
+          </div>
+          <div class="config-title"><h3>Conference 252</h3><p>Full classroom, 252 seats</p></div>
+          <p class="muted">Rows of tables facing the stage and screen, for keynotes, seminars, certification sessions and all-hands meetings.</p>
+          <div class="config-links"><a class="btn btn-ghost" href="#rooms">View floor plan (PDF)</a></div>
+        </article>
+        <article class="config">
+          <div class="gallery" data-gallery="Conference 126">
+            <button type="button" aria-label="Open Conference 126 gallery, photo 1"><div class="ph"><span>Photo: round tables set for lunch</span></div></button>
+            <button type="button" aria-label="Open Conference 126 gallery, photo 2"><div class="ph"><span>Photo: group workshop</span></div></button>
+            <button type="button" aria-label="Open Conference 126 gallery, photo 3"><div class="ph"><span>Photo: table setting</span></div></button>
+          </div>
+          <div class="config-title"><h3>Conference 126</h3><p>Training and dining, 126 seats</p></div>
+          <p class="muted">Round tables that work for group exercises in the morning and a seated lunch at noon, without resetting the room.</p>
+          <div class="config-links"><a class="btn btn-ghost" href="#rooms">View floor plan (PDF)</a></div>
+        </article>
+      </div>
+      <div class="same-price">
+        <p><strong>Same package price for both layouts.</strong> Need something different? Custom layouts and pricing are available.</p>
+        <a class="btn btn-primary" href="#inquire" data-reason="event">Ask about a custom layout</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="experience">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>A day at WBC</h2>
+        <p class="lede">How a typical corporate event flows through the venue, from registration to the evening reception on the lawn.</p>
+      </div>
+      <ol class="day">
+        <li><div class="ph"><span>Photo: registration</span></div><time>8:00</time><h3>Arrival</h3><p>Guests check in at the event support room while your team sets up.</p></li>
+        <li><div class="ph"><span>Photo: keynote</span></div><time>9:00</time><h3>Keynote</h3><p>The full classroom faces one stage and one screen. Everyone sees and hears.</p></li>
+        <li><div class="ph"><span>Photo: workshop</span></div><time>10:30</time><h3>Workshops</h3><p>Breakout groups work at round tables in the training layout.</p></li>
+        <li><div class="ph"><span>Photo: conference lunch</span></div><time>12:30</time><h3>Lunch</h3><p>A local caterer serves at the tables, with help finding vendors if you need it.</p></li>
+        <li><div class="ph"><span>Photo: networking in the garden</span></div><time>16:00</time><h3>Networking</h3><p>The day closes outdoors on the Gazebo Lawn and Garden.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="facilities">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Everything around the hall</h2>
+        <p class="lede">Space to prepare behind the scenes and room to step outside between sessions.</p>
+      </div>
+      <div class="facilities">
+        <div class="fac-feature">
+          <button type="button" class="ph-open" data-gallery="Gazebo Lawn and Garden" data-index="0" style="padding:0;border:0;cursor:zoom-in" aria-label="Open garden gallery">
+            <div class="ph"><span>Featured photo: networking on the Gazebo Lawn</span></div>
+          </button>
+          <h3>Gazebo Lawn and Garden</h3>
+          <p class="muted">An open lawn with a gazebo for receptions, breaks and team photos, a few steps from the conference hall.</p>
+          <div class="thumbs" data-gallery="Gazebo Lawn and Garden" data-offset="1">
+            <button type="button" aria-label="Garden photo 2"><div class="ph"><span>Lawn</span></div></button>
+            <button type="button" aria-label="Garden photo 3"><div class="ph"><span>Gazebo</span></div></button>
+            <button type="button" aria-label="Garden photo 4"><div class="ph"><span>Paths</span></div></button>
+            <button type="button" aria-label="Garden photo 5"><div class="ph"><span>Trees</span></div></button>
+          </div>
+        </div>
+        <div class="fac-side">
+          <div class="fac-room">
+            <div class="ph"><span>Photo: support room</span></div>
+            <div>
+              <h3>Kakesako Event Support Room</h3>
+              <p class="muted">A private room next to the hall for registration, speaker prep, catering staging or storing materials.</p>
+            </div>
+          </div>
+          <div class="inclusions">
+            <h3>Included with every rental</h3>
+            <ul>
+              <li>Conference hall in either standard layout</li>
+              <li>Tables and chairs set before you arrive</li>
+              <li>Stage, projection screen and sound system</li>
+              <li>Use of the Kakesako Event Support Room</li>
+              <li>Access to the Gazebo Lawn and Garden</li>
+              <li>An on-site contact on event days</li>
+            </ul>
+            <p class="muted">Optional: introductions to local caterers, rental companies and other event vendors.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="pricing">
+    <div class="wrap pricing">
+      <div>
+        <h2>One package, priced by the day</h2>
+        <p class="lede" style="margin-top:14px">Choose how many days you need. The price is the same for Conference 252 and Conference 126.</p>
+        <div class="days" role="group" aria-label="Number of rental days">
+          <button type="button" data-days="1" aria-pressed="true"><span>1</span>day</button>
+          <button type="button" data-days="2" aria-pressed="false"><span>2</span>days</button>
+          <button type="button" data-days="3" aria-pressed="false"><span>3</span>days</button>
+          <button type="button" data-days="4" aria-pressed="false"><span>4</span>days</button>
+        </div>
+        <ol class="conditions" aria-label="Conditions">
+          <li>Corporate and organizational rentals of one to four consecutive days.</li>
+          <li>Rental hours, deposit and cancellation terms as listed in the rate sheet.</li>
+          <li>Longer events and custom layouts are quoted separately.</li>
+        </ol>
+      </div>
+      <div class="quote" aria-live="polite">
+        <span class="sample-tag">Sample figures for the concept</span>
+        <p class="quote-sub" id="quoteLabel">1-day corporate package</p>
+        <p class="quote-total" id="quoteTotal">$2,400</p>
+        <p class="quote-sub" id="quotePer">$2,400 per day, either layout</p>
+        <a class="btn btn-primary" href="#inquire" id="quoteCta">Request these dates</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="community section-alt">
+    <div class="wrap community-inner">
+      <div style="display:grid;gap:12px">
+        <h2>Your rental supports the community</h2>
+        <p class="muted">Revenue from WBC rentals helps sustain programs for veterans, youth and the wider community in Hawaiʻi.</p>
+      </div>
+      <div class="community-photos" aria-label="Community program photos">
+        <div class="ph"><span>Veterans</span></div>
+        <div class="ph"><span>Youth</span></div>
+        <div class="ph"><span>Community</span></div>
+        <div class="ph"><span>Programs</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section inquire" id="inquire">
+    <div class="wrap inquire-grid">
+      <div>
+        <h2>Check dates or book a tour</h2>
+        <p class="lede" style="margin-top:14px">Tell us what you are planning. We reply with availability and next steps, usually within one business day.</p>
+        <dl class="contact-points">
+          <div><dt>Location</dt><dd>Honolulu, Hawaiʻi</dd></div>
+          <div><dt>Phone and email</dt><dd>From your Content Master</dd></div>
+          <div><dt>Tours</dt><dd>Walk through the hall, support room and garden before you book</dd></div>
+        </dl>
+      </div>
+
+      <form id="inquiry" novalidate>
+        <fieldset class="reasons">
+          <legend>What can we help with?</legend>
+          <label><input type="radio" name="reason" value="availability" checked><span>Check availability</span></label>
+          <label><input type="radio" name="reason" value="tour"><span>Book a tour</span></label>
+          <label><input type="radio" name="reason" value="event"><span>Ask about an event</span></label>
+        </fieldset>
+        <div class="row">
+          <div class="field"><label for="name">Your name</label><input id="name" name="name" autocomplete="name" required><p class="err" id="name-err"></p></div>
+          <div class="field"><label for="org">Organization</label><input id="org" name="org" autocomplete="organization"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required><p class="err" id="email-err"></p></div>
+          <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="date">Preferred start date</label><input id="date" name="date" type="date"><p class="err" id="date-err"></p></div>
+          <div class="field"><label for="days">Days</label>
+            <select id="days" name="days"><option>1 day</option><option>2 days</option><option>3 days</option><option>4 days</option><option>Not sure yet</option></select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="layout">Layout</label>
+            <select id="layout" name="layout"><option>Conference 252 (classroom)</option><option>Conference 126 (training and dining)</option><option>Custom layout</option><option>Not sure yet</option></select>
+          </div>
+          <div class="field"><label for="guests">Expected guests</label><input id="guests" name="guests" type="number" min="1" max="500" inputmode="numeric"><p class="err" id="guests-err"></p></div>
+        </div>
+        <div class="field"><label for="msg">Anything else?</label><textarea id="msg" name="msg" placeholder="Agenda, catering, AV needs or questions"></textarea></div>
+        <div class="form-foot">
+          <p>Your details go only to the WBC events team.</p>
+          <button class="btn btn-primary" type="submit" id="submitBtn">Send inquiry</button>
+        </div>
+        <div class="sent" role="status" tabindex="-1" id="sent">
+          <h3>Inquiry sent</h3>
+          <p class="muted" id="sentText">Thanks. The WBC team will reply with availability shortly.</p>
+          <p><button class="btn btn-ghost" type="button" id="again">Send another inquiry</button></p>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Weinberg Business Center, Honolulu, Hawaiʻi</p>
+    <p>Concept by Jahondor O. Placeholder imagery and sample figures.</p>
+  </div>
+</footer>
+
+<dialog class="lightbox" id="lightbox" aria-label="Photo gallery">
+  <div class="lb-inner">
+    <div class="lb-bar"><strong id="lbTitle">Gallery</strong><button type="button" id="lbClose">Close</button></div>
+    <div class="ph" id="lbPhoto"><span id="lbCaption"></span></div>
+    <div class="lb-bar"><button type="button" id="lbPrev">Previous</button><span class="lb-count" id="lbCount"></span><button type="button" id="lbNext">Next</button></div>
+  </div>
+</dialog>
+
+<script>
+(function () {
+  "use strict";
+  var NS = "http://www.w3.org/2000/svg";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- Floor plan: 252 classroom seats morph into 126 at 14 round tables ---------- */
+  var seatsG = document.getElementById("seats");
+  var desksG = document.getElementById("desks");
+  var roundsG = document.getElementById("rounds");
+  var classroom = [], dining = [];
+
+  // Classroom: 14 rows x 18 seats, two blocks of 9 with a center aisle
+  var dx = 24, aisle = 60, rowGap = 20.5, x0 = (600 - (8 * dx * 2 + aisle)) / 2, y0 = 112;
+  for (var r = 0; r < 14; r++) {
+    var y = y0 + r * rowGap;
+    [x0, x0 + 8 * dx + aisle].forEach(function (bx) {
+      var d = document.createElementNS(NS, "rect");
+      d.setAttribute("class", "desk"); d.setAttribute("x", bx - 9); d.setAttribute("y", y - 13);
+      d.setAttribute("width", 8 * dx + 18); d.setAttribute("height", 5); d.setAttribute("rx", 2);
+      desksG.appendChild(d);
+      for (var s = 0; s < 9; s++) classroom.push([bx + s * dx, y]);
+    });
+  }
+  // Training and dining: 14 round tables of 9 seats in rows of 4, 3, 4, 3
+  var rows = [[120, 240, 360, 480], [180, 300, 420], [120, 240, 360, 480], [180, 300, 420]];
+  var ys = [128, 206, 284, 362];
+  rows.forEach(function (xs, i) {
+    xs.forEach(function (cx) {
+      var t = document.createElementNS(NS, "circle");
+      t.setAttribute("class", "round"); t.setAttribute("cx", cx); t.setAttribute("cy", ys[i]); t.setAttribute("r", 19);
+      roundsG.appendChild(t);
+      for (var k = 0; k < 9; k++) {
+        var a = (k / 9) * Math.PI * 2 - Math.PI / 2;
+        dining.push([cx + Math.cos(a) * 30, ys[i] + Math.sin(a) * 30]);
+      }
+    });
+  });
+
+  var seatEls = classroom.map(function (p, i) {
+    var c = document.createElementNS(NS, "circle");
+    c.setAttribute("class", "seat"); c.setAttribute("r", 5.2);
+    c.style.transform = "translate(" + p[0] + "px," + p[1] + "px)";
+    seatsG.appendChild(c);
+    return c;
+  });
+
+  // Pair each dining seat with a classroom seat spread across the hall so the morph reads as a reshuffle
+  var order = classroom.map(function (_, i) { return i; }).filter(function (i) { return i % 2 === 0; });
+
+  var META = {
+    "252": { seats: "252", layout: "Full classroom", forText: "Presentations and seminars", desc: "Floor diagram of the conference hall in the classroom configuration with 252 seats." },
+    "126": { seats: "126", layout: "Training and dining", forText: "Workshops and seated meals", desc: "Floor diagram of the conference hall with 14 round tables seating 126 guests." }
+  };
+
+  function setPlan(plan) {
+    var toDining = plan === "126";
+    var used = {};
+    if (toDining) order.forEach(function (ci, n) { used[ci] = dining[n]; });
+    seatEls.forEach(function (el, i) {
+      el.style.transitionDelay = reduce ? "0s" : ((i % 36) * 8) + "ms";
+      if (toDining) {
+        if (used[i]) { el.style.transform = "translate(" + used[i][0] + "px," + used[i][1] + "px)"; el.style.opacity = 1; }
+        else { el.style.opacity = 0; }
+      } else {
+        el.style.transform = "translate(" + classroom[i][0] + "px," + classroom[i][1] + "px)"; el.style.opacity = 1;
+      }
+    });
+    desksG.style.opacity = toDining ? 0 : 1;
+    roundsG.style.opacity = toDining ? 1 : 0;
+    var m = META[plan];
+    document.getElementById("metaSeats").textContent = m.seats;
+    document.getElementById("metaLayout").textContent = m.layout;
+    document.getElementById("metaFor").textContent = m.forText;
+    document.getElementById("planDesc").textContent = m.desc;
+    document.querySelectorAll(".plan-switch button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.plan === plan)); });
+  }
+  desksG.style.transition = roundsG.style.transition = "opacity .5s ease";
+  roundsG.style.opacity = 0;
+  document.querySelectorAll(".plan-switch button").forEach(function (b) {
+    b.addEventListener("click", function () { setPlan(b.dataset.plan); });
+  });
+
+  /* ---------- Mobile menu ---------- */
+  var menuBtn = document.getElementById("menuBtn"), nav = document.getElementById("nav");
+  menuBtn.addEventListener("click", function () {
+    var open = nav.classList.toggle("open");
+    menuBtn.setAttribute("aria-expanded", String(open));
+  });
+  nav.addEventListener("click", function (e) { if (e.target.tagName === "A") { nav.classList.remove("open"); menuBtn.setAttribute("aria-expanded", "false"); } });
+
+  /* ---------- Pricing (sample figures) ---------- */
+  var PRICES = { 1: 2400, 2: 4500, 3: 6450, 4: 8200 };
+  var fmt = function (n) { return "$" + n.toLocaleString("en-US"); };
+  var chosenDays = 1;
+  document.querySelectorAll(".days button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      chosenDays = Number(b.dataset.days);
+      document.querySelectorAll(".days button").forEach(function (o) { o.setAttribute("aria-pressed", String(o === b)); });
+      var total = PRICES[chosenDays];
+      document.getElementById("quoteLabel").textContent = chosenDays + "-day corporate package";
+      document.getElementById("quoteTotal").textContent = fmt(total);
+      document.getElementById("quotePer").textContent = fmt(Math.round(total / chosenDays)) + " per day, either layout";
+    });
+  });
+  document.getElementById("quoteCta").addEventListener("click", function () {
+    document.getElementById("days").selectedIndex = chosenDays - 1;
+    pickReason("availability");
+  });
+
+  /* ---------- Inquiry form ---------- */
+  var form = document.getElementById("inquiry");
+  function pickReason(v) { var r = form.querySelector('input[name="reason"][value="' + v + '"]'); if (r) r.checked = true; }
+  document.querySelectorAll("[data-reason]").forEach(function (a) { a.addEventListener("click", function () { pickReason(a.dataset.reason); }); });
+
+  function setErr(id, msg) {
+    var input = document.getElementById(id), p = document.getElementById(id + "-err");
+    if (msg) { input.setAttribute("aria-invalid", "true"); input.setAttribute("aria-describedby", id + "-err"); p.textContent = msg; }
+    else { input.removeAttribute("aria-invalid"); input.removeAttribute("aria-describedby"); p.textContent = ""; }
+    return !msg;
+  }
+  function validate() {
+    var ok = true, first = null;
+    var name = form.name.value.trim(), email = form.email.value.trim(), date = form.date.value, guests = form.guests.value;
+    if (!setErr("name", name ? "" : "Enter your name so we know who to reply to.")) { ok = false; first = first || "name"; }
+    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+    if (!setErr("email", email ? (emailOk ? "" : "Check the email address, for example name@company.com.") : "Enter an email address for our reply.")) { ok = false; first = first || "email"; }
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var dateMsg = date && new Date(date + "T00:00:00") < today ? "Choose a date from today onward." : "";
+    if (!setErr("date", dateMsg)) { ok = false; first = first || "date"; }
+    var g = Number(guests);
+    var gMsg = guests && (g < 1 || g > 500 || !Number.isInteger(g)) ? "Enter a whole number of guests." : (g > 252 ? "Our standard maximum is 252 seats. We can still discuss your event." : "");
+    if (g > 252) { document.getElementById("guests-err").textContent = gMsg; }
+    else if (!setErr("guests", gMsg)) { ok = false; first = first || "guests"; }
+    if (first) document.getElementById(first).focus();
+    return ok;
+  }
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (!validate()) return;
+    var btn = document.getElementById("submitBtn");
+    btn.disabled = true; btn.textContent = "Sending...";
+    // Production: POST to a PHP mail handler on the existing cPanel hosting.
+    setTimeout(function () {
+      var reason = form.reason.value;
+      var text = { availability: "We will check your dates and reply with availability.", tour: "We will reply to arrange a time for your tour.", event: "We will reply with answers about your event." }[reason];
+      document.getElementById("sentText").textContent = "Thanks, " + form.name.value.trim().split(" ")[0] + ". " + text;
+      form.classList.add("is-sent");
+      document.getElementById("sent").focus();
+      btn.disabled = false; btn.textContent = "Send inquiry";
+    }, 700);
+  });
+  document.getElementById("again").addEventListener("click", function () {
+    form.reset(); form.classList.remove("is-sent"); document.getElementById("name").focus();
+  });
+  ["name", "email", "date", "guests"].forEach(function (id) {
+    document.getElementById(id).addEventListener("input", function () { if (this.getAttribute("aria-invalid")) setErr(id, ""); });
+  });
+
+  /* ---------- Lightbox galleries ---------- */
+  var lb = document.getElementById("lightbox"), lbItems = [], lbIndex = 0, lbTitleText = "";
+  function collect(name) {
+    var items = [];
+    document.querySelectorAll('[data-gallery="' + name + '"] .ph span').forEach(function (s) { items.push(s.textContent); });
+    return items;
+  }
+  function show() {
+    document.getElementById("lbTitle").textContent = lbTitleText;
+    document.getElementById("lbCaption").textContent = lbItems[lbIndex];
+    document.getElementById("lbCount").textContent = (lbIndex + 1) + " of " + lbItems.length;
+  }
+  function openGallery(name, index) {
+    lbItems = collect(name); lbTitleText = name; lbIndex = index; show();
+    if (typeof lb.showModal === "function") lb.showModal();
+  }
+  document.querySelectorAll(".gallery, .thumbs").forEach(function (g) {
+    var offset = Number(g.dataset.offset || 0);
+    g.querySelectorAll("button").forEach(function (b, i) { b.addEventListener("click", function () { openGallery(g.dataset.gallery, i + offset); }); });
+  });
+  document.querySelectorAll(".ph-open").forEach(function (b) { b.addEventListener("click", function () { openGallery(b.dataset.gallery, Number(b.dataset.index)); }); });
+  document.getElementById("lbClose").addEventListener("click", function () { lb.close(); });
+  document.getElementById("lbPrev").addEventListener("click", function () { lbIndex = (lbIndex - 1 + lbItems.length) % lbItems.length; show(); });
+  document.getElementById("lbNext").addEventListener("click", function () { lbIndex = (lbIndex + 1) % lbItems.length; show(); });
+  lb.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowLeft") document.getElementById("lbPrev").click();
+    if (e.key === "ArrowRight") document.getElementById("lbNext").click();
+  });
+  lb.addEventListener("click", function (e) { if (e.target === lb) lb.close(); });
+})();
+</script>
+</body>
+</html>
